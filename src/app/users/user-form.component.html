@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-md-6">
+        <form class="well" [formGroup]="form">
+            <fieldset>
+                <legend>User</legend>
+                <div class="form-group"
+                     [ngClass]="{ 'has-danger': form.controls.name.touched && !form.controls.name.valid }">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" formControlName="name">
+                    <div class="form-control-feedback"
+                         *ngIf="form.controls.name.touched && !form.controls.name.valid">
+                         Name is required.
+                    </div>
+                </div>
+                <div class="form-group"
+                     [ngClass]="{ 'has-danger': form.controls.email.touched && !form.controls.email.valid }">
+                    <label for="email">Email</label>
+                    <input #email formControlName="email" type="text" class="form-control">
+                    <div class="form-control-feedback"
+                         *ngIf="form.controls.email.touched && !form.controls.email.valid">
+                         Please type a valid email.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control">
+                </div>
+            </fieldset>
+            <fieldset formGroupName="address">
+                <legend>Address</legend>
+                <div class="form-group">
+                    <label for="street">Street</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="suite">Suite</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="zipcode">Zip-Code</label>
+                    <input type="text" class="form-control">
+                </div>
+            </fieldset>
+            <p><button routerLink="" class="btn btn-primary" [disabled]="!form.valid">Save</button></p>
+        </form>
+    </div>
+</div>
