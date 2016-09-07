@@ -1,0 +1,21 @@
+<h3>Users</h3>
+<table class="table">
+    <thead class="thead">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of _users">
+            <th>{{ user.id }}</th>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email | lowercase }}</td>
+            <td><a><i class="fa fa-edit"></i></a></td>
+            <td><a><i class="fa fa-pencil"></i></a></td>
+        </tr>
+    </tbody>
+</table>
