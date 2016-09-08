@@ -15,25 +15,18 @@ export class UserFormComponent implements OnInit {
     user: User = new User();
     form: FormGroup;
 
+    title: String;
     isSaving = false;
 
-    constructor(private _fb: FormBuilder,
+    constructor(fb: FormBuilder,
                 private _router: Router,
                 private _currentRoute: ActivatedRoute,
                 private _userService: UsersService) {
-    }
-
-    ngOnInit() {
-        this.createForm();
-        this.getUser(); 
-    }
-
-    createForm() {
-        this.form = this._fb.group({
+        this.form = fb.group({
             name: ['', Validators.required],
             email: ['', AppValidators.email],
             phone: [],
-            address: this._fb.group({
+            address: fb.group({
                 street: [],
                 suite: [],
                 city: [],
@@ -42,15 +35,21 @@ export class UserFormComponent implements OnInit {
         });
     }
 
-    getUser() {
+    ngOnInit() {
         // Verify if the route has the id parameter, then try to find the user.
         this._currentRoute.params.subscribe(params => {
-            var id = params['id'];        
-            if (!id) return;
-            this._userService.getUser(id)
-                .subscribe(res => {
-                    this.user = res;
-                });
+            var id = params['id'];
+            if (!id) {
+                this.title = "Add User"
+                return;
+            } else {
+                this.title = "Edit User";
+                this._userService.getUser(id)
+                    .subscribe(res => {
+                        this.user = res;
+                    });
+            }
+
         });
     }
 
@@ -63,6 +62,7 @@ export class UserFormComponent implements OnInit {
         else
             srvCall = this._userService.addUser(this.user);
         
+        // TODO: Error handling.
         srvCall.subscribe(
             res => {
                 this.form.markAsPristine();
@@ -75,5 +75,6 @@ export class UserFormComponent implements OnInit {
     }
 
     // TODO: Implement dirty-checking.
+    // TODO: Use bootstrap alert class to show errors.
 
 }
