@@ -15,6 +15,8 @@ export class UserFormComponent implements OnInit {
     user: User = new User();
     form: FormGroup;
 
+    isSaving = false;
+
     constructor(private _fb: FormBuilder,
                 private _router: Router,
                 private _currentRoute: ActivatedRoute,
@@ -53,15 +55,23 @@ export class UserFormComponent implements OnInit {
     }
 
     save() {
+        this.isSaving = true;
         var srvCall;
+        
         if (this.user.id)
             srvCall = this._userService.updateUser(this.user);
         else
             srvCall = this._userService.addUser(this.user);
         
-        srvCall.subscribe(res => {
-            this._router.navigate(['users']);
-        });
+        srvCall.subscribe(
+            res => {
+                this.form.markAsPristine();
+                this._router.navigate(['users']);
+            },
+            () => {
+                this.isSaving = false;
+            }
+        );
     }
 
     // TODO: Implement dirty-checking.

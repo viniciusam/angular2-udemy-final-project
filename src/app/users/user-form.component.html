@@ -45,7 +45,10 @@
                     <input type="text" class="form-control" formControlName="zipcode" [(ngModel)]="user.address.zipcode">
                 </div>
             </fieldset>
-            <p><input type="submit" class="btn btn-primary" value="Save" [disabled]="!form.valid" /></p>
+            <p><input type="submit"
+                      class="btn btn-primary"
+                      value="{{ (isSaving) ? 'Saving...' : 'Save' }}"
+                      [disabled]="!form.valid || isSaving" /></p>
         </form>
     </div>
 </div>
