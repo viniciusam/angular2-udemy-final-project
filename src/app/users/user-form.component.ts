@@ -44,9 +44,15 @@ export class UserFormComponent implements OnInit {
             } else {
                 this.title = "Edit User";
                 this._userService.getUser(id)
-                    .subscribe(res => {
-                        this.user = res;
-                    });
+                    .subscribe(
+                        res => {
+                            this.user = res;
+                        },
+                        err => {
+                            if (err.status == 404) {
+                                this._router.navigate(['notfound']);
+                            }
+                        });
             }
 
         });
