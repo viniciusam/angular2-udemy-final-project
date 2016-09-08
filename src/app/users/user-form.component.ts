@@ -40,8 +40,7 @@ export class UserFormComponent implements OnInit {
         this._currentRoute.params.subscribe(params => {
             var id = params['id'];
             if (!id) {
-                this.title = "Add User"
-                return;
+                this.title = "Add User";
             } else {
                 this.title = "Edit User";
                 this._userService.getUser(id)
