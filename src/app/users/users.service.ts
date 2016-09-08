@@ -3,12 +3,13 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
+import { AppConstants } from '../shared/app-constants';
 import { User } from './user';
 
 @Injectable()
 export class UsersService {
 
-    private _baseUrl = "http://jsonplaceholder.typicode.com/users"
+    private _baseUrl = AppConstants.BASE_URL + "users"
 
     constructor(private _http: Http) {
     }
