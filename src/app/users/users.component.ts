@@ -22,4 +22,18 @@ export class UsersComponent implements OnInit {
         });
   }
 
+  deleteUser(user: User) {
+    if (confirm("Are you sure?")) {
+      this._userService.deleteUser(user)
+        .subscribe(
+          res => {
+            // If deleted successful, we remove the user from the array.
+            var userIndex = this._users.indexOf(user);
+            this._users.splice(userIndex, 1);
+          },
+          err => alert("Failed to remove the user.")
+        );
+    }
+  }
+
 }

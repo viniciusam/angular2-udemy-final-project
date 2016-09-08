@@ -1,5 +1,5 @@
 <h3>Users</h3>
-<p><button routerLink="add" class="btn btn-outline-primary">Add User</button></p>
+<p><button routerLink="/users/new" class="btn btn-outline-primary">Add User</button></p>
 <table class="table table-bordered">
     <thead class="thead">
         <tr>
@@ -15,8 +15,8 @@
             <th>{{ user.id }}</th>
             <td>{{ user.name }}</td>
             <td>{{ user.email | lowercase }}</td>
-            <td><a><i class="fa fa-pencil"></i></a></td>
-            <td><a><i class="fa fa-trash"></i></a></td>
+            <td><a [routerLink]="['/users', user.id]"><i class="fa fa-pencil"></i></a></td>
+            <td><a (click)="deleteUser(user)" href="javascript:void(0);"><i class="fa fa-trash"></i></a></td>
         </tr>
     </tbody>
 </table>
