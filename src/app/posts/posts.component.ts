@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { PostsService } from './posts.service';
 import { Post } from './post';
+import { Comment } from './comment';
 
 @Component({
   selector: 'posts',
@@ -10,9 +11,11 @@ import { Post } from './post';
 export class PostsComponent implements OnInit {
 
   posts: Post[];
-
-  isLoading = false;
   selected: Post;
+  comments: Comment[];
+
+  postsLoading = false;
+  commentsLoading;
 
   constructor(private _postsService: PostsService) {
 
@@ -23,19 +26,33 @@ export class PostsComponent implements OnInit {
   }
 
   getPosts() {
-    this.isLoading = true;
+    this.postsLoading = true;
     this._postsService.getPosts().subscribe(
       res => {
         this.posts = res;
       },
       null,
       () => {
-        this.isLoading = false;
+        this.postsLoading = false;
       });
   }
 
   select(post: Post) {
     this.selected = post;
+    this.comments = null;
+    this.getComments(post);
+  }
+
+  getComments(post: Post) {
+    this.commentsLoading = true;
+    this._postsService.getComments(post).subscribe(
+      res => {
+        this.comments = res;
+      },
+      null,
+      () => {
+        this.commentsLoading = false;
+      });
   }
 
 }
