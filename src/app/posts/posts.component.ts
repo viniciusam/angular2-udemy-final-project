@@ -17,20 +17,31 @@ export class PostsComponent implements OnInit {
   selectedPost: Post;
   comments: Comment[];
 
-  postsLoading = false;
-  commentsLoading;
+  postsLoading: boolean;
+  commentsLoading: boolean;
 
   constructor(private _postsService: PostsService,
               private _usersService: UsersService) {
-
   }
 
   ngOnInit() {
-    this.getUsers();
-    this.getPosts(0);
+    this.loadUsers();
+    this.loadPosts();
   }
 
-  getUsers() {
+  selectUser(filter) {
+    this.selectedPost = null;
+    this.comments = null;
+    this.loadPosts(filter);
+  }
+
+  selectPost(post: Post) {
+    this.selectedPost = post;
+    this.comments = null;
+    this.loadComments(post);
+  }
+
+  private loadUsers() {
     this._usersService.getUsers().subscribe(
       res => {
         this.users = res;
@@ -38,9 +49,9 @@ export class PostsComponent implements OnInit {
     );
   }
 
-  getPosts(userId) {
+  private loadPosts(filter?) {
     this.postsLoading = true;
-    this._postsService.getPosts(userId).subscribe(
+    this._postsService.getPosts(filter).subscribe(
       res => {
         this.posts = res;
       },
@@ -50,7 +61,7 @@ export class PostsComponent implements OnInit {
       });
   }
 
-  getComments(post: Post) {
+  private loadComments(post: Post) {
     this.commentsLoading = true;
     this._postsService.getComments(post).subscribe(
       res => {
@@ -60,18 +71,6 @@ export class PostsComponent implements OnInit {
       () => {
         this.commentsLoading = false;
       });
-  }
-
-  selectUser(id) {
-    this.selectedPost = null;
-    this.comments = null;
-    this.getPosts(id);
-  }
-
-  selectPost(post: Post) {
-    this.selectedPost = post;
-    this.comments = null;
-    this.getComments(post);
   }
 
 }

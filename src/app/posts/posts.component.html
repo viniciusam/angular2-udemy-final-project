@@ -1,7 +1,7 @@
 <h3>Posts</h3>
 <p>
-    <select #s (change)="selectUser(s.value)" class="custom-select">
-        <option value="0">All Users</option>
+    <select #s (change)="selectUser({ userId: s.value })" class="custom-select">
+        <option value="">All Users</option>
         <option *ngFor="let user of users" [value]="user.id">{{ user.name }}</option>
     </select>
 </p>
