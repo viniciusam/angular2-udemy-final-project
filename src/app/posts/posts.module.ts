@@ -7,6 +7,7 @@ import { postsRouterConfig } from './posts.routes';
 import { PostsService } from './posts.service';
 import { UsersService } from '../users/users.service';
 import { SpinnerComponent } from '../shared/spinner.component';
+import { PaginationComponent } from '../shared/pagination.component';
 import { PostsComponent } from './posts.component';
 
 @NgModule({
@@ -21,6 +22,7 @@ import { PostsComponent } from './posts.component';
   ],
   declarations: [
     SpinnerComponent,
+    PaginationComponent,
     PostsComponent
   ],
   providers: [ PostsService, UsersService ]

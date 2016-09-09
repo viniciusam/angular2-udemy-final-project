@@ -1,0 +1,13 @@
+<nav *ngIf="items && (items.length > pageSize)">
+    <ul class="pagination">
+        <li class="page-item" [ngClass]="{ disabled: currentPage == 1 }">
+            <a class="page-link" href="javascript:void(0);"><span>&laquo;</span></a>
+        </li>
+        <li *ngFor="let page of pages" [ngClass]="{ active: currentPage == page }" class="page-item">
+            <a (click)="selectPage(page)" class="page-link" href="javascript:void(0);">{{ page }}</a>
+        </li>
+        <li class="page-item" [ngClass]="{ disabled: currentPage == pages.length }">
+            <a class="page-link" href="javascript:void(0);"><span>&raquo;</span></a>
+        </li>
+    </ul>
+</nav>  

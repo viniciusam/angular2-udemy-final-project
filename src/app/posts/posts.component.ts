@@ -14,6 +14,7 @@ export class PostsComponent implements OnInit {
 
   users: User[];
   posts: Post[];
+  paginatedPosts: Post[];
   selectedPost: Post;
   comments: Comment[];
 
@@ -27,6 +28,10 @@ export class PostsComponent implements OnInit {
   ngOnInit() {
     this.loadUsers();
     this.loadPosts();
+  }
+
+  pageChanged(e) {
+    this.paginatedPosts = e.items;
   }
 
   selectUser(filter) {
