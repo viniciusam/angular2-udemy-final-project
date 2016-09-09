@@ -8,7 +8,7 @@
 <spinner [visible]="postsLoading"></spinner>
 <div class="row" *ngIf="!isLoading">
     <div class="col-md-6">
-        <pagination [items]="posts" (pageChanged)="pageChanged($event)"></pagination>
+        <pagination [items]="posts" (page-changed)="onPageChanged($event)"></pagination>
         <div class="list-group">
             <a class="list-group-item" href="javascript:void(0);"
                *ngFor="let post of paginatedPosts"

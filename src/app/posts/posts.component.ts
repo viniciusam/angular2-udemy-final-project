@@ -30,7 +30,7 @@ export class PostsComponent implements OnInit {
     this.loadPosts();
   }
 
-  pageChanged(e) {
+  onPageChanged(e) {
     this.paginatedPosts = e.items;
   }
 

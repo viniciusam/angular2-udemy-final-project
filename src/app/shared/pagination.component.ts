@@ -9,33 +9,31 @@ export class PaginationComponent implements OnChanges {
     @Input() items: any[];
     @Input('page-size') pageSize = 10;
 
-    @Output() pageChanged = new EventEmitter();
+    @Output('page-changed') pageChanged = new EventEmitter();
 
-    currentPage = 1;
-    pages = [];
+    currentPage: number;
+    pages: any[];
 
     ngOnChanges() {
-        if (!this.items) {
+        if (!this.items)
             this.items = [];
-            return;
-        }
-        
-        var lastPage = Math.trunc(this.items.length / this.pageSize);
+                
         this.pages = [];
-        for (var i = 1; i <= lastPage; i++) {
-            this.pages.push(i);
+        var startIndex = 0;
+        while (startIndex < this.items.length) {
+            var endIndex = startIndex + this.pageSize - 1 ;
+            var pageItems = this.items.slice(startIndex, endIndex);
+            this.pages.push(pageItems);
+            startIndex = endIndex + 1;
         }
 
         this.selectPage(1);
     }
 
-    selectPage(page) {
-        this.currentPage = page;
-        
-        var pageIdx = (this.currentPage - 1) * this.pageSize;
-        var pageItems = this.items.slice(pageIdx, pageIdx + this.pageSize);
-
-        this.pageChanged.next({ page: this.currentPage, items: pageItems });
+    selectPage(pageNumber) {
+        this.currentPage = pageNumber;
+        var pageItems = this.pages[this.currentPage - 1];
+        this.pageChanged.emit({ page: this.currentPage, items: pageItems });
     }
 
 }
