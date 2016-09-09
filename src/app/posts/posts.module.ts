@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { postsRouterConfig } from './posts.routes';
 import { PostsService } from './posts.service';
+import { UsersService } from '../users/users.service';
 import { SpinnerComponent } from '../shared/spinner.component';
 import { PostsComponent } from './posts.component';
 
@@ -22,7 +23,7 @@ import { PostsComponent } from './posts.component';
     SpinnerComponent,
     PostsComponent
   ],
-  providers: [ PostsService ]
+  providers: [ PostsService, UsersService ]
 })
 export class PostsModule {
 

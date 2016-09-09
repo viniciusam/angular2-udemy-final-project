@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { PostsService } from './posts.service';
+import { UsersService } from '../users/users.service';
 import { Post } from './post';
+import { User } from '../users/user';
 import { Comment } from './comment';
 
 @Component({
@@ -10,24 +12,35 @@ import { Comment } from './comment';
 })
 export class PostsComponent implements OnInit {
 
+  users: User[];
   posts: Post[];
-  selected: Post;
+  selectedPost: Post;
   comments: Comment[];
 
   postsLoading = false;
   commentsLoading;
 
-  constructor(private _postsService: PostsService) {
+  constructor(private _postsService: PostsService,
+              private _usersService: UsersService) {
 
   }
 
   ngOnInit() {
-    this.getPosts();
+    this.getUsers();
+    this.getPosts(0);
   }
 
-  getPosts() {
+  getUsers() {
+    this._usersService.getUsers().subscribe(
+      res => {
+        this.users = res;
+      }
+    );
+  }
+
+  getPosts(userId) {
     this.postsLoading = true;
-    this._postsService.getPosts().subscribe(
+    this._postsService.getPosts(userId).subscribe(
       res => {
         this.posts = res;
       },
@@ -35,12 +48,6 @@ export class PostsComponent implements OnInit {
       () => {
         this.postsLoading = false;
       });
-  }
-
-  select(post: Post) {
-    this.selected = post;
-    this.comments = null;
-    this.getComments(post);
   }
 
   getComments(post: Post) {
@@ -53,6 +60,18 @@ export class PostsComponent implements OnInit {
       () => {
         this.commentsLoading = false;
       });
+  }
+
+  selectUser(id) {
+    this.selectedPost = null;
+    this.comments = null;
+    this.getPosts(id);
+  }
+
+  selectPost(post: Post) {
+    this.selectedPost = post;
+    this.comments = null;
+    this.getComments(post);
   }
 
 }
